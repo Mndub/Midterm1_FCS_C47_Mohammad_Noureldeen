@@ -13,21 +13,42 @@ def convertFileToDictionary(file_pathway): #https://docs.python.org/3/tutorial/i
       data[key] = value
   return data
 
+# Initialize the data dictionary using the convertFileToDictionary function
+file_pathway = "Employee draft.txt"  
+data = convertFileToDictionary(file_pathway)
+
 #login data
-def check_role(username, password,data):
+def check_role(username, password):
   # max_attempts = 5
   
   if username == "admin" and password == "admin123123":
     return "admin"
-  elif username in data.keys() and password == "":
+  elif username != "admin" and password == "":
     return "employee"
   return "invalid"
+
+#add new employee
+def add_new_employee(data, username, id, gender, salary):
+    employee_id = list(data.keys())
+    
+    if employee_id:  # Check if the list is not empty
+        last_employee_id = employee_id[-1]
+        number = int(last_employee_id[7:])
+    else:
+        number = 1  # If no employee IDs are available, start from 1
+    
+    number += 1
+    new_employee_id = f"employee{number}"
+    data[new_employee_id] = [username, id, gender, salary]
+    
+    return data
+
 
 #admin menu
 def display_admin_menu():
   print( "welcome Mr.admin!Choose one of these options to go forward.\n1. Display Inventory Statistics\n 2. Add Product to Inventory\n 3. Display All Products in Inventory (sorted by product ID)\n 4. Update Product Price\n 5. Update Product Quantity\n 6. Remove Product from Inventory\n 7. Search Product by Name\n 8. Sort Products by Quantity (descending)\n 9. Exit")
 
-print("Welcome Mr.admin/Mr.farmer,//Please login")
+print("Welcome Mr.admin/Mr.employee,//Please login")
 
 attempts = 0
 #print(data)
@@ -35,7 +56,7 @@ while True:
   if attempts < 5:
     username = input(str("Enter username: "))
     password = input("Enter password: ")
-    role = check_role(username, password,data)
+    role = check_role(username, password)
     if role == "admin":
       while True:
         display_admin_menu()
@@ -46,8 +67,9 @@ while True:
 
           username = input(str("Enter username: "))
           id = input(str("Enter id: "))
-          gender = int(input(str("Enter gender: ")))
+          gender = str(input(str("Enter gender: ")))
           salary= int(input(str("Enter salary: ")))
+          data = add_new_employee(data, username, id, gender, salary)
           print("New product added succesfully.")
     
           
