@@ -34,12 +34,23 @@ def display_statistics(data):
   male = 0
   female = 0
   for key, value in data.items():
-    if data[2] == "male":
+    if value[2] == "male":
       male += 1
-      return male
-    elif data[2] == "female":
+    elif value[2] == "female":
       female += 1
-      return female
-    return "wrong input" 
+      
   print('Male :' + str(male))
   print('Female :' + str(female))
+  
+#add new employee
+def add_new_employee(data, username, id, gender, salary):
+  employee_serial = list(data.keys())
+  last_employee_id = employee_serial[-1]
+  number = int(last_employee_id[3:])
+  number = number + 1
+  id = list(data.value(1))
+  last_id_number = id[-1]
+  auto_id = int(last_id_number[:])
+  auto_id = auto_id + 1
+  data[number] = [username, gender, salary]
+  return data
