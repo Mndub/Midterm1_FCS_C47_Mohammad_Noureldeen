@@ -1,7 +1,8 @@
 #import file
-import datetime #https://realpython.com/python-datetime/
-def convertFileToDictionary(file_pathway):#https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
-  data = {} #https://docs.python.org/3/reference/simple_stmts.html#the-global-statement
+import datetime #(https://realpython.com/python-datetime/)
+#O(n)
+def convertFileToDictionary(file_pathway):#(https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files)
+  data = {} #(https://docs.python.org/3/reference/simple_stmts.html#the-global-statement)
   with open(file_pathway) as f:
     for line in f:
       line = line.strip()
@@ -15,7 +16,7 @@ def convertFileToDictionary(file_pathway):#https://docs.python.org/3/tutorial/in
       # print(data)
   return data
  
-#login data
+#login data O(n)
 def check_role(values,username, password):
   # max_attempts = 5
   
@@ -25,11 +26,11 @@ def check_role(values,username, password):
     return "user"
   return "Incorrect Username and/or Password"
 
-#admin menu
+#admin menu O(1)
 def display_admin_menu():
   print( "welcome Mr.admin!Choose one of these options to go forward.\n 1. Display Statistics\n 2. Add an Employee\n 3. Display all Employees \n 4. Change Employee’s Salary\n 5. Remove Employee\n 6. Raise Employee’s Salary\n 7. Exit")
 
-#display statistics
+#display statistics O(n)
 def display_statistics(data):
   male = 0
   female = 0
@@ -42,7 +43,7 @@ def display_statistics(data):
   print('Male :' + str(male))
   print('Female :' + str(female))
 
-#add new employee
+#add new employee O(n)
 def add_new_employee(data, username, id, gender, salary):
   employee_serial = list(data.keys())
   last_employee_id = employee_serial[-1]
@@ -56,7 +57,7 @@ def add_new_employee(data, username, id, gender, salary):
   data[key] = [username, auto_id, gender, salary]
   return data
 
-#Display all Employee sorted (https://docs.python.org/3/howto/sorting.html)
+#Display all Employee sorted O(n log n) (https://docs.python.org/3/howto/sorting.html)
 def display_all_employee(data):
   my_keys = list(data.keys())
   my_keys.sort()
@@ -64,14 +65,14 @@ def display_all_employee(data):
   for key,value in sorted_dict.items():
     print(key,value)
     
-#Check id existance
+#Check id existance O(n)
 def check_id_existance(data, id):
   for key, value in data.items():
     if value[1] == id:
       return key
   return False    
   
-#Change Employee’s Salary
+#Change Employee’s Salary 0(1)
 def change_employee_salary(data, key,salary):
   
   data[key][3] = salary
@@ -80,12 +81,12 @@ def change_employee_salary(data, key,salary):
 
 
   
-#Remove Employee
+#Remove Employee O(1)
 def remove_employee(data, key):
   del data[key] #(https://docs.python.org/3/reference/simple_stmts.html#the-del-statement)
   print("Employee removed succesfully")
   return data
-#Raise Employee’s Salary
+#Raise Employee’s Salary O(1)
 def raise_employee_salary(data, key , percentage):
   salary = data[key][3]
   salary = salary + (salary * percentage)/100
@@ -93,21 +94,21 @@ def raise_employee_salary(data, key , percentage):
   print("Salary raised succesfully")
   return data
 
-#save and exit
+#save and exit O(n)
 def save_to_file(file_pathway, data):
-  with open(file_pathway, 'w') as f: #https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
+  with open(file_pathway, 'w') as f: #(https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files)
     for key, value in data.items():
       value = [str(v) for v in value] #converting all values to string format
       line = ",".join([key] + value)
       print(line)
       f.write(line + "\n")
     return
-  exit() #https://docs.python.org/3/library/functions.html#exit 
+  exit() #(https://docs.python.org/3/library/functions.html#exit) 
 
 
-#                 ..........user .........
+#.......................###....user....### ................
 
-#greetings
+#greeting user O(1)
 def greeting_user(prefix, username, gender):
   z = prefix
   if gender == "male":
@@ -115,28 +116,28 @@ def greeting_user(prefix, username, gender):
   elif gender == "female" :
     z+= "Mrs. " + username
   print(z)
-#check gender
+#check gender o(n)
 def check_gender(data,username):
   for key, value in data.items():
     if value[0] == username:
       return value[2]
 
-#salary view
+#salary of user O(n)
 def user_salary(data,username):
   for key, value in data.items():
     if value[0] == username:
       return value[3]
-#time stamp login 
-def timestamp_login(): #https://realpython.com/python-datetime/
+#time stamp login O(1)
+def timestamp_login(): #(https://realpython.com/python-datetime/)
   timestamp = datetime.datetime.now()  # Get the current timestamp
   return timestamp
-#save and exit
+#save and exit O(1)
 def save_user_timestamp(file_pathway, username, timestamp):
-  with open(file_pathway, 'a') as f: #https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
+  with open(file_pathway, 'a') as f: #(https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files)
     line = ",".join([username,str(timestamp)])
     f.write(line + "\n")
     return
-# user menu
+# user menu O(1)
 def display_user_menu():
    print("1.salary\n2. Exit")
 
@@ -145,7 +146,7 @@ def display_user_menu():
 data = convertFileToDictionary("employee_database.txt")
 
 attempts = 0
-#print(data)
+#print(data) O(n)
 while True:
   print("Welcome Mr.admin/Mr./Mrs.User,//Please login")
   if attempts < 5:
