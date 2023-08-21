@@ -139,7 +139,8 @@ def save_user_timestamp(file_pathway, username, timestamp):
     return
 # user menu O(1)
 def display_user_menu():
-   print("1.salary\n2. Exit")
+  print("")
+  print("Choose one of these options to go forward.\n1. salary\n2. Exit")
 
 #------------End of Functions-------------
 # if __name__ == 'main':
@@ -148,7 +149,8 @@ data = convertFileToDictionary("employee_database.txt")
 attempts = 0
 #print(data) O(n)
 while True:
-  print("Welcome Mr.admin/Mr./Mrs.User,//Please login")
+  print("")
+  print("Welcome Mr./ Mrs. admin or User, //Please login")
   if attempts < 5:
     username = input(str("Enter username: "))
     password = input("Enter password: ")
@@ -221,6 +223,7 @@ while True:
           print("your salary is: " + str(user_salary(data, username)))
         elif choice == 2:
           save_user_timestamp("user_timestamp.txt", username, user_timestamp)
+          print("")
           greeting_user("GoodBye ",username, gender)
           break
     else:
