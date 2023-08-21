@@ -15,12 +15,12 @@ def convertFileToDictionary(file_pathway):#https://docs.python.org/3/tutorial/in
   return data
  
 #login data
-def check_role(data,username, password):
+def check_role(values,username, password):
   # max_attempts = 5
   
   if username == "admin" and password == "admin123123":
     return "admin"
-  elif username in == value and password == "":
+  elif username in values and password == "":
     return "user"
   return "Incorrect Username and/or Password"
 
@@ -104,9 +104,32 @@ def save_to_file(file_pathway, data):
   exit() #https://docs.python.org/3/library/functions.html#exit 
 
 
-#user menu
+#                 ..........user .........
+
+#greetings
+def greeting_user(username,gender):
+  z = "Hi "
+  if gender == "male":
+    z+= "Mr. " + username
+  elif gender == "female" :
+    z+= "Mrs. " + username
+  print(z)
+#check gender
+def check_gender(data,username):
+  for key, value in data.items():
+    if value[0] == username:
+      return value[2]
+
+#salary view
+def user_salary(data,username):
+  for key, value in data.items():
+    if value[0] == username:
+      return value[3]
+#time stamp login 
+def timestamp_login(username)
+# user menu
 def display_user_menu():
-   print("1.salary\n 2. Exit")
+   print("1.salary\n2. Exit")
 
 #------------End of Functions-------------
 # if __name__ == 'main':
@@ -120,7 +143,8 @@ while True:
   if attempts < 5:
     username = input(str("Enter username: "))
     password = input("Enter password: ")
-    role = check_role(username, password)
+    names = [v[0] for v in data.values()]
+    role = check_role(names, username, password)
     if role == "admin":
       while True:
         display_admin_menu()
@@ -177,3 +201,19 @@ while True:
           break  # Exit the loop and end the program when user selects choice 7
         else:
           print("Invalid choice, please try again!")
+    elif role == "user":
+      gender = check_gender(data, username)
+      greeting_user(username, gender)
+      while True:
+        display_user_menu()
+        choice = int(input("Enter choice number: "))
+        if choice == 1:
+          print("your salary is: " + str(user_salary(data, username)))
+        elif choice == 2:
+          pass
+    else:
+      print("Incorrect username and/or password, please try again!")
+      attempts += 1
+  else:
+    print("you reached attempts limit!Try again later!")
+    exit()
