@@ -1,0 +1,3 @@
+emp001,cdaoud,20220802,male,12000.0
+emp002,manuella,20220803,female,1200.0
+emp003,hasan,20220804,male,12450

@@ -1,4 +1,5 @@
 #import file
+import datetime #https://realpython.com/python-datetime/
 def convertFileToDictionary(file_pathway):#https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
   data = {} #https://docs.python.org/3/reference/simple_stmts.html#the-global-statement
   with open(file_pathway) as f:
@@ -20,7 +21,7 @@ def check_role(values,username, password):
   
   if username == "admin" and password == "admin123123":
     return "admin"
-  elif username in values and password == "":
+  elif username in values :
     return "user"
   return "Incorrect Username and/or Password"
 
@@ -107,8 +108,8 @@ def save_to_file(file_pathway, data):
 #                 ..........user .........
 
 #greetings
-def greeting_user(username,gender):
-  z = "Hi "
+def greeting_user(prefix, username, gender):
+  z = prefix
   if gender == "male":
     z+= "Mr. " + username
   elif gender == "female" :
@@ -126,7 +127,15 @@ def user_salary(data,username):
     if value[0] == username:
       return value[3]
 #time stamp login 
-def timestamp_login(username)
+def timestamp_login(): #https://realpython.com/python-datetime/
+  timestamp = datetime.datetime.now()  # Get the current timestamp
+  return timestamp
+#save and exit
+def save_user_timestamp(file_pathway, username, timestamp):
+  with open(file_pathway, 'a') as f: #https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
+    line = ",".join([username,str(timestamp)])
+    f.write(line + "\n")
+    return
 # user menu
 def display_user_menu():
    print("1.salary\n2. Exit")
@@ -135,11 +144,10 @@ def display_user_menu():
 # if __name__ == 'main':
 data = convertFileToDictionary("employee_database.txt")
 
-print("Welcome Mr.admin/Mr./Mrs.User,//Please login")
-
 attempts = 0
 #print(data)
 while True:
+  print("Welcome Mr.admin/Mr./Mrs.User,//Please login")
   if attempts < 5:
     username = input(str("Enter username: "))
     password = input("Enter password: ")
@@ -161,7 +169,7 @@ while True:
               break
             else:
               print("invalid gender.Please enter male or female")
-          salary = int(input(str("Enter salary: ")))
+          salary = float(input(str("Enter salary: ")))
           # print(username,id,gender,salary)
           data = add_new_employee(data, username, id, gender, salary)
           print("New employee added succesfully.")
@@ -202,15 +210,18 @@ while True:
         else:
           print("Invalid choice, please try again!")
     elif role == "user":
+      user_timestamp = timestamp_login()
       gender = check_gender(data, username)
-      greeting_user(username, gender)
+      greeting_user("Hi ",username, gender)
       while True:
         display_user_menu()
         choice = int(input("Enter choice number: "))
         if choice == 1:
           print("your salary is: " + str(user_salary(data, username)))
         elif choice == 2:
-          pass
+          save_user_timestamp("user_timestamp.txt", username, user_timestamp)
+          greeting_user("GoodBye ",username, gender)
+          break
     else:
       print("Incorrect username and/or password, please try again!")
       attempts += 1
