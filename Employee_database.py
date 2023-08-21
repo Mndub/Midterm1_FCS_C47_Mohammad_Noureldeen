@@ -15,12 +15,12 @@ def convertFileToDictionary(file_pathway):#https://docs.python.org/3/tutorial/in
   return data
  
 #login data
-def check_role(username, password):
+def check_role(data,username, password):
   # max_attempts = 5
   
   if username == "admin" and password == "admin123123":
     return "admin"
-  elif username in data and password == "":
+  elif username in == value and password == "":
     return "user"
   return "Incorrect Username and/or Password"
 
@@ -91,12 +91,16 @@ def raise_employee_salary(data, key , percentage):
   data[key][3] = salary
   print("Salary raised succesfully")
   return data
+
 #save and exit
 def save_to_file(file_pathway, data):
   with open(file_pathway, 'w') as f: #https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
     for key, value in data.items():
-      line = ','.join([key] + value)
-      file_pathway.write(line + "\n")
+      value = [str(v) for v in value] #converting all values to string format
+      line = ",".join([key] + value)
+      print(line)
+      f.write(line + "\n")
+    return
   exit() #https://docs.python.org/3/library/functions.html#exit 
 
 
@@ -127,10 +131,9 @@ while True:
         elif choice == 2:
 
           username = input(str("Enter username: "))
-          valid_genders = "male" or "female"
           while True:
             gender = input(str("Enter gender male/female: "))
-            if gender == valid_genders:
+            if gender == "male" or gender == "female" :
               break
             else:
               print("invalid gender.Please enter male or female")
@@ -170,3 +173,7 @@ while True:
           
         elif choice == 7: 
           print("Exiting the program")
+          save_to_file("employee_database.txt",data)
+          break  # Exit the loop and end the program when user selects choice 7
+        else:
+          print("Invalid choice, please try again!")
